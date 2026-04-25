@@ -10,7 +10,9 @@ export default function Navbar() {
   return (
     <nav>
       <div className="container inner">
-        <div className="logo">💧 TokenAgua</div>
+        <div className="logo">
+          <img src="/logo.png" alt="TokenAgua" style={{ height: "68px", width: "auto", objectFit: "contain", display: "block" }} />
+        </div>
         <div className="links">
           <a href="#reportar">Reportar</a>
           <a href="#colonias">Colonias</a>

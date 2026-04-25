@@ -28,7 +28,7 @@ export default function App() {
 
       {/* Hero */}
       <section className="hero">
-        <div className="badge">🌊 Hackathon Ciudad Inteligente · ZMG 2026</div>
+        <div className="badge">🌊 Hackathon Monad Blitz · GDL 2026</div>
         <h1>
           Agua limpia,<br />
           <span>ciudad transparente</span>
@@ -70,6 +70,7 @@ export default function App() {
 
       {/* Footer */}
       <footer>
+        <img src="/logo_sin_titulo.png" alt="TokenAgua" style={{ width: "36px", height: "36px", objectFit: "contain", marginBottom: ".5rem" }} />
         <div>TokenAgua © 2026 · Hackathon Ciudad Inteligente GDL</div>
         <div>
           <a href="https://monad-testnet.socialscan.io" target="_blank" rel="noreferrer">
