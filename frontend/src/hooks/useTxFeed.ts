@@ -10,7 +10,10 @@ export function useTxFeed() {
   const [txs, setTxs] = useState<TxEntry[]>([]);
 
   const addTx = useCallback((hash: string, type: string) => {
-    setTxs((prev) => [{ hash, type, timestamp: Date.now() }, ...prev].slice(0, 20));
+    setTxs((prev) => {
+      if (prev.some((tx) => tx.hash === hash)) return prev;
+      return [{ hash, type, timestamp: Date.now() }, ...prev].slice(0, 20);
+    });
   }, []);
 
   return { txs, addTx };

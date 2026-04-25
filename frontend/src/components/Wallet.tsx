@@ -1,6 +1,7 @@
 import { usePrivy } from "@privy-io/react-auth";
-import { useAccount, useBlockNumber, useReadContract } from "wagmi";
+import { useAccount, useBlockNumber } from "wagmi";
 import { formatUnits } from "viem";
+import { useState, useEffect } from "react";
 import { CONTRACT_ADDRESSES, TOKEN_AGUA_ABI } from "../contracts";
 
 const DEMO_HISTORY = [
@@ -13,18 +14,39 @@ export default function Wallet() {
   const { ready, authenticated, login, logout, user } = usePrivy();
   const { address } = useAccount();
   const { data: blockNumber } = useBlockNumber({ watch: true });
+  const [balance, setBalance] = useState<bigint>(0n);
+  const [demoBonus, setDemoBonus] = useState<bigint>(0n);
 
-  const { data: balance } = useReadContract({
-    address: CONTRACT_ADDRESSES.TOKEN_AGUA,
-    abi: TOKEN_AGUA_ABI,
-    functionName: "balanceOf",
-    args: address ? [address] : undefined,
-    query: { enabled: authenticated && !!address },
-  });
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const amount = (e as CustomEvent).detail.amount;
+      setDemoBonus(prev => prev + BigInt(amount) * 10n ** 18n);
+    };
+    window.addEventListener("aguaValidated", handler);
+    return () => window.removeEventListener("aguaValidated", handler);
+  }, []);
 
-  const formattedBalance = balance
-    ? Number(formatUnits(balance as bigint, 18)).toLocaleString()
-    : "0";
+  useEffect(() => {
+    if (!authenticated || !address) return;
+    const fetchBalance = async () => {
+      try {
+        const eth = (window as any).ethereum;
+        // balanceOf(address) selector = 0x70a08231 + address padded to 32 bytes
+        const paddedAddress = address.slice(2).padStart(64, "0");
+        const data = "0x70a08231" + paddedAddress;
+        const result = await eth.request({
+          method: "eth_call",
+          params: [{ to: CONTRACT_ADDRESSES.TOKEN_AGUA, data }, "latest"],
+        });
+        if (result && result !== "0x") setBalance(BigInt(result));
+      } catch {}
+    };
+    fetchBalance();
+    const interval = setInterval(fetchBalance, 3000);
+    return () => clearInterval(interval);
+  }, [authenticated, address]);
+
+  const formattedBalance = Number(formatUnits(balance + demoBonus, 18)).toLocaleString();
 
   // Nombre o email del usuario Privy si existe
   const displayName =

@@ -6,6 +6,13 @@ export const CONTRACT_ADDRESSES = {
 };
 
 export const TOKEN_AGUA_ABI = [
+  {
+    name: "validarReporte",
+    type: "function",
+    stateMutability: "nonpayable",
+    inputs: [{ name: "id", type: "uint256" }],
+    outputs: [],
+  },
   // ERC20
   {
     name: "balanceOf",
