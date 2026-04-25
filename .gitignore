@@ -16,6 +16,9 @@ out/
 contracts/out/
 contracts/cache/
 contracts/broadcast/
+contracts/lib/
+contracts/foundry.lock
+contracts/foundryup-install.sh
 
 # Logs
 *.log
