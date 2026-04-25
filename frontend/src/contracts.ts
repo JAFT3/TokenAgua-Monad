@@ -1,8 +1,8 @@
 /// Direcciones de contratos desplegados en Monad Testnet (chain 10143)
 /// Actualiza estas direcciones después de ejecutar el script de deploy
 export const CONTRACT_ADDRESSES = {
-  TOKEN_AGUA: "0x0000000000000000000000000000000000000000" as `0x${string}`,
-  TOKEN_AGUA_DAO: "0x0000000000000000000000000000000000000000" as `0x${string}`,
+  TOKEN_AGUA: "0x7DA81C6dbC05F682775cd97B6f87ff659C62e9a8" as `0x${string}`,
+  TOKEN_AGUA_DAO: "0xD0e42B6967A5724227cb8Cd1Ef06af728705B679" as `0x${string}`,
 };
 
 export const TOKEN_AGUA_ABI = [
