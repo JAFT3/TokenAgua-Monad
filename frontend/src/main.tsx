@@ -27,6 +27,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         embeddedWallets: {
           createOnLogin: "users-without-wallets",
         },
+        externalWallets: {
+          coinbaseWallet: {
+            connectionOptions: "eoaOnly",
+          },
+        },
       }}
     >
       <QueryClientProvider client={queryClient}>
